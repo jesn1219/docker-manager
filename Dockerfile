@@ -28,6 +28,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget
 
+RUN apt-get install -y --no-install-recommends \
+    software-properties-common
+
+RUN apt install -y --no-install-recommends \
+    net-tools \
+    vim
+
+RUN apt install -y --no-install-recommends \
+    virtualenv \
+    wget
+#    xpra
+RUN apt-get install -y --no-install-recommends \
+    xserver-xorg-dev
 
 # Clone and install the repository
 RUN /bin/bash -c "cd /root/ && \
@@ -89,14 +102,7 @@ RUN apt-get install -y \
     libglew-dev \
     libosmesa6-dev
 
-RUN apt-get install -y \
-    software-properties-common \
-    net-tools \
-    vim \
-    virtualenv \
-    wget \
-    xpra \
-    xserver-xorg-dev
+
 
 
 RUN python -c "import mujoco_py"
