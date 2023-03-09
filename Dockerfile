@@ -68,7 +68,8 @@ RUN pip install -U transformers==4.6 && \
 
 # Install MuJoCo
 RUN apt-get install -y libosmesa6-dev libgl1-mesa-glx libglfw3
-RUN conda install -c conda-forge mesalib glew glfw
+RUN conda install -c conda-forge mesalib glew glfw ncurses
+
 RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
     tar -xzf mujoco210-linux-x86_64.tar.gz && \
     mkdir /root/.mujoco && \
@@ -78,19 +79,23 @@ RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
 
 RUN conda install -c menpo glfw3
 
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin"
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/nvidia"
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/conda/envs/odt/lib"
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/root/.mujoco/mujoco210/bin
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib/nvidia
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/opt/conda/envs/odt/lib
+ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+
 
 RUN pip install mujoco-py==2.1.2.14
-ENV C_INCLUDE_PATH=:$CONDA_PREFIX/include
-ENV CPATH=$CONDA_PREFIX/include
-RUN apt-get install libglu1-mesa-dev libosmesa6-dev
-RUN conda install -c conda-forge ncurses
+ENV C_INCLUDE_PATH ${C_INCLUDE_PATH}:${CONDA_PREFIX}/include
 
-RUN echo $CONDA_PREFIX
+
+ENV CPATH ${CONDA_PREFIX}/include
+RUN apt-get install libglu1-mesa-dev libosmesa6-dev
+
+RUN echo ${CONDA_PREFIX}
 RUN echo $(ls -a /opt)
-RUN echo $CONDA_DEFAULT_ENV
+RUN echo ${CONDA_DEFAULT_ENV}
 
 
 RUN apt-get install -y \
@@ -102,6 +107,41 @@ RUN apt-get install -y \
     libglew-dev \
     libosmesa6-dev
 
+
+ENV PATH $CONDA_PREFIX/bin:$PATH
+
+
+RUN conda update -y gcc
+
+RUN apt install -y libgl1-mesa-glx
+
+RUN find / -name "osmesa.h"
+RUN conda install -c menpo osmesa
+
+                                                
+ENV C_INCLUDE_PATH ${C_INCLUDE_PATH}:/opt/conda/pkgs/mesalib-18.3.1-h590aaf7_0/include/          
+ENV C_INCLUDE_PATH ${C_INCLUDE_PATH}:/usr/include/
+ENV C_INCLUDE_PATH ${C_INCLUDE_PATH}:/usr/include/x86_64-linux-gnu/
+ENV C_INCLUDE_PATH /opt/conda/envs/odt/include/:${C_INCLUDE_PATH}
+
+
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/root/.mujoco/mujoco210/bin/
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib/nvidia
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/opt/conda/envs/odt/lib/
+ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /usr/include/:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /opt/conda/envs/odt/include/:${LD_LIBRARY_PATH}
+
+
+RUN echo ${C_INCLUDE_PATH}
+
+RUN find / -name "libc-header-start.h"
+RUN pip install cython
+RUN ls -a /opt/conda/pkgs/mesalib-18.3.1-h590aaf7_0
+ENV LD_LIBRARY_PATH /opt/conda/pkgs/mesalib-18.3.1-h590aaf7_0/lib/:${LD_LIBRARY_PATH}
+RUN echo "test"
+RUN ls -a /opt/conda/envs/odt/include/GL
 
 
 
