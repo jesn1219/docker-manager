@@ -13,9 +13,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     virtualenv \
     vim \
+    curl \
+    openssh-server \
     software-properties-common
 
-RUN apt install -y curl
+# Default config
+RUN echo "service ssh start" >> ~/.bashrc
+
+
 
 
 # 아래 명령들은 infinite loop에 빠지는 경우가 있음
@@ -42,6 +47,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 
 # Create virtual environment
 RUN cd / && virtualenv --python=python3.8 env
+RUN echo "source /env/bin/activate" >> ~/.bashrc
 
 # Install Mujoco
 RUN mkdir -p /root/.mujoco \

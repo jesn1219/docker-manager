@@ -13,13 +13,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     virtualenv \
     vim \
+    curl \
     software-properties-common
 
 
+# 아래 명령들은 infinite loop에 빠지는 경우가 있음
+# 이럴 경우, #1 혹은 #2 둘 중 하나를 실행해볼것
 # Add deadsnakes PPA for install other python versions
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv F23C5A6CF475977595C89F51BA6932366A755776
+#1
+RUN add-apt-repository ppa:deadsnakes/ppa && apt update 
+#2
+#RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv F23C5A6CF475977595C89F51BA6932366A755776
 RUN apt update
-RUN add-apt-repository ppa:deadsnakes/ppa && apt update
 
 
 # Install Python 3.8
