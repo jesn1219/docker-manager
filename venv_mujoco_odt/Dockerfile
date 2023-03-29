@@ -15,11 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim \
     curl \
     openssh-server \
+    tmux \
     software-properties-common
 
 # Default config
 RUN echo "service ssh start" >> ~/.bashrc
-
+RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin" >> ~/.bashrc
 
 
 
@@ -88,7 +89,8 @@ RUN . /env/bin/activate && \
                 torch==1.8.1 \
                 transformers==4.6 \
                 icecream \
-                protobuf==3.20
+                protobuf==3.20 \
+                wandb
 
 # Download datasets for D4RL (AntMaze and Gym) - Online Decision Transformer
 RUN ls /research
