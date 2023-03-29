@@ -93,11 +93,11 @@ RUN . /env/bin/activate && \
                 wandb
 
 # Download datasets for D4RL (AntMaze and Gym) - Online Decision Transformer
-RUN ls /research
-RUN . /env/bin/activate && \
-    cd /research/online-dt/data && \
-    python ./download_d4rl_antmaze_datasets.py && \
-    python ./download_d4rl_gym_datasets.py
+#RUN ls /research
+#RUN . /env/bin/activate && \
+#    cd /research/online-dt/data && \
+#    python ./download_d4rl_antmaze_datasets.py && \
+#    python ./download_d4rl_gym_datasets.py
 
 
 ########################################################################################
