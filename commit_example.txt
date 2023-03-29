@@ -1,0 +1,13 @@
+
+
+# commit container, to image
+docker commit [options] container_name repo:tag
+
+
+# build docker image
+docker build -t jesn1219/odt:latest .
+
+
+
+# create container
+docker run -it --name odt_set_1 --gpus all -p 60061:6006 -p 22001:22 odt_set:0.1 bash
