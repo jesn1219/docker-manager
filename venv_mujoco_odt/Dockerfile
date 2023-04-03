@@ -1,3 +1,5 @@
+# Set Ubuntu 22.04, CUDA 11.8, CUDNN 8
+
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -19,11 +21,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common
 
 # Default config
+
+## Set SSH
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo "service ssh start" >> ~/.bashrc
-RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin" >> ~/.bashrc
+RUN service ssh restart
 
 
-
+## Set Python Keyserver
 # 아래 명령들은 infinite loop에 빠지는 경우가 있음
 # 이럴 경우, #1 혹은 #2 둘 중 하나를 실행해볼것
 # Add deadsnakes PPA for install other python versions
@@ -34,7 +39,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa && apt update
 RUN apt update
 
 
-# Install Python 3.8
+## Set Python 3.8
 RUN DEBIAN_FRONTEND=noninteractive apt install -y \
     python3.8 \
     python3.8-dev \
@@ -46,9 +51,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
     python3.8-distutils \
     python3-pip
 
+
 # Create virtual environment
 RUN cd / && virtualenv --python=python3.8 env
 RUN echo "source /env/bin/activate" >> ~/.bashrc
+
 
 # Install Mujoco
 RUN mkdir -p /root/.mujoco \
@@ -62,15 +69,21 @@ RUN apt-get install -y libosmesa6-dev
 ENV PATH $PATH:/env/bin
 RUN . /env/bin/activate && pip install mujoco-py==2.1.2.14
 RUN . /env/bin/activate && python -c "import mujoco_py"
+# Set Mujoco Variables
+RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin" >> ~/.bashrc
+
 
 ########################################################################################
 
-# Download Online Decision Transformer
+# Sources for Running 
+
+## Online Decision Transformer
+### Download Online Decision Transformer
 RUN cd / && mkdir research && cd research
 
 RUN cd /research && git clone https://github.com/jesn1219/online-dt.git
 
-# Install Online Decision Transformer Dependencies
+### Install Online Decision Transformer Dependencies
 RUN . /env/bin/activate && \
     pip install cffi==1.15.1 \ 
                 Cython==0.29.33 \
@@ -92,12 +105,19 @@ RUN . /env/bin/activate && \
                 protobuf==3.20 \
                 wandb
 
-# Download datasets for D4RL (AntMaze and Gym) - Online Decision Transformer
+### Download datasets for D4RL (AntMaze and Gym) - Online Decision Transformer
 #RUN ls /research
 #RUN . /env/bin/activate && \
 #    cd /research/online-dt/data && \
 #    python ./download_d4rl_antmaze_datasets.py && \
 #    python ./download_d4rl_gym_datasets.py
+
+## Decision Transformer
+### Download Decision Transformer
+
+
+RUN cd /research && git clone https://github.com/jesn1219/dt.git
+
 
 
 ########################################################################################
