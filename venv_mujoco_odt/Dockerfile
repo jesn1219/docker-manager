@@ -77,11 +77,15 @@ RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin" >
 
 # Sources for Running 
 
+RUN cd / && mkdir research
+
+
+RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
+RUN cd /research/agent-playground && git submodule update --init --recursive
+
+
 ## Online Decision Transformer
 ### Download Online Decision Transformer
-RUN cd / && mkdir research && cd research
-
-RUN cd /research && git clone https://github.com/jesn1219/online-dt.git
 
 ### Install Online Decision Transformer Dependencies
 RUN . /env/bin/activate && \
@@ -93,7 +97,7 @@ RUN . /env/bin/activate && \
                 mujoco-py==2.1.2.14 \
                 Pillow==9.4.0 \
                 pycparser==2.21 \
-                gym \
+                gym==0.23.1 \
                 git+https://github.com/rail-berkeley/d4rl@master#egg=d4rl \
                 mujoco==2.2.1 \
                 numpy==1.23.4 \
@@ -101,7 +105,7 @@ RUN . /env/bin/activate && \
                 tensorboard==2.5.0 \
                 torch==1.8.1 \
                 transformers==4.6 \
-                icecream \
+                icecream==2.1.3 \
                 protobuf==3.20 \
                 wandb
 
@@ -115,8 +119,7 @@ RUN . /env/bin/activate && \
 ## Decision Transformer
 ### Download Decision Transformer
 
-
-RUN cd /research && git clone https://github.com/jesn1219/dt.git
+#RUN cd /research && git clone https://github.com/jesn1219/dt.git
 
 
 
