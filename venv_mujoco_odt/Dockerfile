@@ -80,8 +80,10 @@ RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin" >
 RUN cd / && mkdir research
 
 
-RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
-RUN cd /research/agent-playground && git submodule update --init --recursive
+# this part requires github authorization, so, exclude this part now
+RUN cd /research && git clone https://github.com/jesn1219/docker-manager
+#RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
+#RUN cd /research/agent-playground && git submodule update --init --recursive
 
 
 ## Online Decision Transformer
