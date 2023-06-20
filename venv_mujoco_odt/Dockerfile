@@ -82,6 +82,7 @@ RUN cd / && mkdir research
 
 # this part requires github authorization, so, exclude this part now
 RUN cd /research && git clone https://github.com/jesn1219/docker-manager
+RUN cp /research/docker-manager/setup.sh /research/
 #RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
 #RUN cd /research/agent-playground && git submodule update --init --recursive
 
