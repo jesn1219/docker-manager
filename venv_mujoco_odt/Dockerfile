@@ -104,7 +104,7 @@ RUN . /env/bin/activate && \
                 git+https://github.com/rail-berkeley/d4rl@master#egg=d4rl \
                 mujoco==2.2.1 \
                 numpy==1.23.4 \
-                stable-baselines3==1.1.0 \
+                #stable-baselines3==1.1.0 \
                 tensorboard==2.5.0 \
                 torch==1.8.1 \
                 transformers==4.6 \
