@@ -11,7 +11,7 @@ RUN cd / && mkdir research
 # this part requires github authorization, so, exclude this part now
 RUN cd /research && git clone https://github.com/jesn1219/docker-manager
 RUN cd /research && git clone https://github.com/jesn1219/rl_zoo_jesnk.git
-#RUN cp /research/docker-manager/setup.sh /research/
+RUN cp /research/docker-manager/setup.sh /research/
 #RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
 #RUN cd /research/agent-playground && git submodule update --init --recursive
 
@@ -122,7 +122,11 @@ RUN . /env/bin/activate && \
 ### Install env2 for rl-zoo3
 RUN apt-get install -y swig cmake ffmpeg
 RUN . /env2/bin/activate && cd /research/rl_zoo_jesnk && \
-    pip install -r requirements.txt
+    pip install -r requirements.txt && \
+    pip install gymnasium-robotics mujoco-py 
+RUN . /env2/bin/activate && cd /research/rl_zoo_jesnk && \
+    pip install "Cython==0.29.*" && \
+    python -c "import mujoco_py"
 
 
 
