@@ -77,7 +77,7 @@ RUN cd / && virtualenv --python=python3.10 env2
 RUN echo "source /env2/bin/activate" >> ~/.bashrc
 RUN echo "alias sv2='deactivate;source /env2/bin/activate'" >> ~/.bashrc
 RUN echo "alias wn='watch -n0.5 -d nvidia-smi" >> ~/.bashrc
-RUN echo "alias sb='source ~/.bashrc'" >> ~/.bashrc
+RUN echo "alias sb='source ~/.bashrc" >> ~/.bashrc
 
 
 
