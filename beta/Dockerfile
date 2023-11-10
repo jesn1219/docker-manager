@@ -40,6 +40,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ## Set SSH
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+RUN echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
+
 RUN echo "service ssh start" >> ~/.bashrc
 RUN service ssh restart
 
@@ -76,8 +78,8 @@ RUN cd / && virtualenv --python=python3.8 env
 RUN cd / && virtualenv --python=python3.10 env2
 RUN echo "source /env2/bin/activate" >> ~/.bashrc
 RUN echo "alias sv2='deactivate;source /env2/bin/activate'" >> ~/.bashrc
-RUN echo "alias wn='watch -n0.5 -d nvidia-smi" >> ~/.bashrc
-RUN echo "alias sb='source ~/.bashrc" >> ~/.bashrc
+RUN echo "alias wn='watch -n0.5 -d nvidia-smi'" >> ~/.bashrc
+RUN echo "alias sb='source ~/.bashrc'" >> ~/.bashrc
 
 
 
@@ -132,6 +134,7 @@ RUN . /env2/bin/activate && cd /research/rl_zoo_jesnk && \
     pip install "Cython==0.29.*" && \
     python -c "import mujoco_py"
 
+RUN apt-get install -y x11-apps
 
 
 ### Download datasets for D4RL (AntMaze and Gym) - Online Decision Transformer
