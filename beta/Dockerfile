@@ -41,6 +41,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ## Set SSH
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
+RUN chsh -s $(which bash)
+
 
 RUN echo "service ssh start" >> ~/.bashrc
 RUN service ssh restart
