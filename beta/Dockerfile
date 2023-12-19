@@ -86,8 +86,9 @@ RUN echo "alias sb='source ~/.bashrc'" >> ~/.bashrc
 
 
 # Install OpenAI Mujoco
+# link replaced with dm mujoco. it must be testified(23.12.19)
 RUN mkdir -p /root/.mujoco \
-    && wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz -O mujoco.tar.gz \
+    && wget https://github.com/google-deepmind/mujoco/releases/download/2.1.0/mujoco210-linux-x86_64.tar.gz -O mujoco.tar.gz \ 
     && tar -xf mujoco.tar.gz -C /root/.mujoco \
     && rm mujoco.tar.gz
 ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
