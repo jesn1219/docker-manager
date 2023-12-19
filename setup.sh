@@ -3,7 +3,12 @@ passwd;
 
 cd /research;
 git clone https://github.com/jesn1219/jesnk_packages;
-sv2 && cd jesnk_packages && sh setup.sh && sv2
+source /env2/bin/activate && cd jesnk_packages && sh setup.sh && source /env2/bin/activate
+
+cd /research/rl_zoo_jesnk;
+source /env2/bin/activate && pip uninstall -y stable-baselines3;
+git clone https://github.com/jesnk/stable_baselines3;
+
 wandb init;
 
 

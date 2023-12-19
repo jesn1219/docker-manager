@@ -9,10 +9,10 @@ FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 RUN apt-get update && apt-get install -y git
 RUN cd / && mkdir research
 # this part requires github authorization, so, exclude this part now
-RUN cd /research && git clone https://github.com/jesn1219/docker-manager
-RUN cd /research && git clone https://github.com/jesn1219/rl_zoo_jesnk.git
+RUN cd /research && git clone https://github.com/jesnk/docker-manager
+RUN cd /research && git clone https://github.com/jesnk/rl_zoo_jesnk.git
 RUN cp /research/docker-manager/setup.sh /research/
-#RUN cd /research && git clone https://github.com/jesn1219/agent-playground.git
+#RUN cd /research && git clone https://github.com/jesnk/agent-playground.git
 #RUN cd /research/agent-playground && git submodule update --init --recursive
 
 
@@ -136,6 +136,8 @@ RUN . /env2/bin/activate && cd /research/rl_zoo_jesnk && \
     pip install "Cython==0.29.*" && \
     python -c "import mujoco_py"
 
+
+
 RUN apt-get install -y x11-apps
 
 
@@ -149,7 +151,7 @@ RUN apt-get install -y x11-apps
 ## Decision Transformer
 ### Download Decision Transformer
 
-#RUN cd /research && git clone https://github.com/jesn1219/dt.git
+#RUN cd /research && git clone https://github.com/jesnk/dt.git
 
 
 
