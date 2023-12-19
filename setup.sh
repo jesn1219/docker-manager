@@ -1,4 +1,4 @@
-sh ./scripts/change_ssh_port.sh 
+#sh ./scripts/change_ssh_port.sh # No need to change ssh port. because. docker level port binding.
 passwd;
 
 cd /research;
